@@ -1,0 +1,80 @@
+<% layout("/layouts/boilerplate") %> 
+
+<body>
+    <div id="filters">
+        <form method="POST" action="/search" class="filter-form">
+            <button type="submit" name="destination" value="Trending" class="filter">
+                <i class="fa-solid fa-fire"></i>
+                <span>Trending</span>
+            </button>
+            <button type="submit" name="destination" value="Rooms" class="filter">
+                <i class="fa-solid fa-bed"></i>
+                <span>Rooms</span>
+            </button>
+            <button type="submit" name="destination" value="Iconic Cities" class="filter">
+                <i class="fa-solid fa-mountain-city"></i>
+                <span>Iconic cities</span>
+            </button>
+            <button type="submit" name="destination" value="Mountains" class="filter">
+                <i class="fa-solid fa-mountain"></i>
+                <span>Mountains</span>
+            </button>
+            <button type="submit" name="destination" value="Castles" class="filter">
+                <i class="fa-brands fa-fort-awesome"></i>
+                <span>Castles</span>
+            </button>
+            <button type="submit" name="destination" value="Amazing Pools" class="filter">
+                <i class="fa-solid fa-person-swimming"></i>
+                <span>Amazing Pools</span>
+            </button>
+            <button type="submit" name="destination" value="Camping" class="filter">
+                <i class="fa-solid fa-campground"></i>
+                <span>Camping</span>
+            </button>
+            <button type="submit" name="destination" value="Farms" class="filter">
+                <i class="fa-solid fa-cow"></i>
+                <span>Farms</span>
+            </button>
+            <button type="submit" name="destination" value="Arctic" class="filter">
+                <i class="fa-solid fa-igloo"></i>
+                <span>Arctic</span>
+            </button>
+            <button type="submit" name="destination" value="Boat" class="filter">
+                <i class="fa-solid fa-sailboat"></i>
+                <span>Boat</span>
+            </button>
+            <button type="submit" name="destination" value="Island" class="filter">
+                <i class="fa-solid fa-earth-oceania"></i>
+                <span>Island</span>
+            </button>
+        </form>
+        <div class="tax-toggle">
+            <div class="form-check form-check-reverse form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+                <label class="form-check-label" for="switchCheckDefault">Display Total after Taxes</label>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+        <% for(let listing of allListings) { %>
+            <a href="/listings/<%= listing._id %>" class="listing-link">
+                <div class="card col listing-card">
+                    <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem">
+                    <div class="card-img-overlay"></div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <b><%= listing.title %></b>
+                            <br>
+                            <span class="price-display"
+                                data-normal-price="<%= Number(listing.price) %>"
+                                data-gst-price="<%= Number(listing.price * 1.18).toFixed(2) %>">
+                                ₹<%= Number(listing.price).toLocaleString("en-IN") %> / night
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </a>
+        <% } %>
+    </div>
+    <script src="/js/switch.js"></script>
+</body>

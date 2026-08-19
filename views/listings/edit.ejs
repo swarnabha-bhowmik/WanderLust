@@ -1,0 +1,89 @@
+<% layout("/layouts/boilerplate") %>
+<style>
+    .category-dropdown-menu {
+        top: 100% !important;
+        bottom: auto !important;
+        left: 0 !important;
+        right: auto !important;
+        transform: none !important;
+    }
+</style>
+<body>
+    <div class="row mt-3">
+        <div class="col-8 offset-2">
+            <h3>Edit Listing</h3>
+            <br>
+            <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="title">Title</label>
+                    <input type="text" name="listing[title]" id="title" value="<%= listing.title %>" class="form-control" required>
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Please provide a title.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="description">Description</label>
+                    <textarea name="listing[description]" id="description" class="form-control"><%= listing.description %></textarea>
+                </div>
+                <div class="mb-3">
+                    <% if (listing.image && listing.image.url) { %>
+                        <img src="<%= originalUrl %>" alt="Current listing image" class="img-fluid mb-2" style="max-height: 200px;">
+                    <% } %>
+                    <br>
+                    <label for="image">Upload New Image</label>
+                    <input type="file" name="listing[image]" id="image" placeholder="Upload Image" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="price">Price</label>
+                    <input type="number" name="listing[price]" id="price" value="<%= listing.price %>" class="form-control" min="0" required>
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Please provide a price.</div>
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-md-4">
+                        <label for="location">Location</label>
+                        <input type="text" name="listing[location]" id="location" value="<%= listing.location %>" class="form-control" required>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Please provide a location.</div>
+                    </div>
+                    <div class="mb-3 col-md-8">
+                        <label for="country">Country</label>
+                        <input type="text" name="listing[country]" id="country" value="<%= listing.country %>" class="form-control" required>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Please provide a country.</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="d-block mb-2">Category</label>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary dropdown-toggle w-100 text-start" type="button" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false" id="categoryDropdownButton">
+                            <% const selectedCategories = listing.category || []; %>
+                            <%= selectedCategories.length ? selectedCategories.join(', ') : 'Select categories' %>
+                        </button>
+                        <div class="dropdown-menu category-dropdown-menu p-3 w-100" aria-labelledby="categoryDropdownButton" style="max-height: 300px; overflow-y: auto;">
+                            <% const categoryOptions = ["Trending", "Rooms", "Iconic Cities", "Mountains", "Castles", "Amazing Pools", "Camping", "Farms", "Arctic", "Boat", "Island"]; %>
+                            <% for (let option of categoryOptions) { %>
+                                <div class="form-check">
+                                    <input class="form-check-input category-checkbox" type="checkbox" name="listing[category]" value="<%= option %>" id="category-<%= option.toLowerCase().replace(/\s+/g, '-') %>" <%= listing.category && listing.category.includes(option) ? "checked" : "" %>>
+                                    <label class="form-check-label" for="category-<%= option.toLowerCase().replace(/\s+/g, '-') %>"><%= option %></label>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
+                    const categoryDropdownButton = document.getElementById('categoryDropdownButton');
+
+                    const updateCategoryButtonText = () => {
+                        const selected = [...categoryCheckboxes].filter(cb => cb.checked).map(cb => cb.value);
+                        categoryDropdownButton.textContent = selected.length ? selected.join(', ') : 'Select categories';
+                    };
+
+                    categoryCheckboxes.forEach(cb => cb.addEventListener('change', updateCategoryButtonText));
+                </script>
+                <button class="btn btn-dark add-btn mt-3">Update</button>
+                <br><br>
+            </form>
+        </div>
+    </div>
+</body>

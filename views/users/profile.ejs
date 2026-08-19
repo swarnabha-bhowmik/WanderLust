@@ -1,0 +1,91 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+    .profile-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 40px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-header {
+        text-align: center;
+        margin-bottom: 40px;
+        border-bottom: 2px solid #fe424d;
+        padding-bottom: 20px;
+    }
+
+    .profile-header h1 {
+        color: #333;
+        font-size: 2rem;
+        margin: 0;
+    }
+
+    .profile-info {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        border-left: 4px solid #fe424d;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .info-label {
+        font-weight: 600;
+        color: #fe424d;
+        min-width: 120px;
+        font-size: 0.95rem;
+    }
+
+    .info-value {
+        color: #555;
+        font-size: 1.1rem;
+        word-break: break-all;
+    }
+
+    .profile-actions {
+        text-align: center;
+        margin-top: 40px;
+    }
+
+    .profile-actions a {
+        margin: 0 10px;
+    }
+</style>
+
+<div class="profile-container">
+    <div class="profile-header">
+        <h1>User Profile</h1>
+    </div>
+
+    <div class="profile-info">
+        <div class="info-item">
+            <span class="info-label">Username:</span>
+            <span class="info-value"><%= currUser.username %></span>
+        </div>
+
+        <div class="info-item">
+            <span class="info-label">Full Name:</span>
+            <span class="info-value"><%= currUser.name %></span>
+        </div>
+
+        <div class="info-item">
+            <span class="info-label">Email:</span>
+            <span class="info-value"><%= currUser.email %></span>
+        </div>
+    </div>
+
+    <div class="profile-actions">
+        <a href="/listings" class="btn btn-primary">Back to Listings</a>
+        <a href="/logout" class="btn btn-danger">Logout</a>
+    </div>
+</div>
