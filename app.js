@@ -84,6 +84,11 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get("/", (req, res) =>
+{
+  res.redirect("/listings");
+});
+
 //Search Route
 app.use("/search", search);
 
